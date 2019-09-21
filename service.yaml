@@ -5,7 +5,7 @@ metadata:
   namespace: '${NAMESPACE@microservice-config}'
   labels:
     moduleid: microservice-data
-    version: 1.70.3-blog-home-prod
+    version: 1.70.4-blog-home-prod
 spec:
   clusterIP: None
   ports:
