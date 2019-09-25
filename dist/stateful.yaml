@@ -5,7 +5,7 @@ metadata:
   namespace: microservices-namespace
   labels:
     moduleid: microservice-data
-    version: 1.70.4-blog-home-prod
+    version: 1.70.6-blog-home-prod
 spec:
   serviceName: general-data-service
   selector:
@@ -16,7 +16,7 @@ spec:
     metadata:
       labels:
         moduleid: microservice-data
-        version: 1.70.4-blog-home-prod
+        version: 1.70.6-blog-home-prod
         app: general-data-set
     spec:
       terminationGracePeriodSeconds: 10
