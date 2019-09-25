@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: '${STATEFUL@microservice-data-config}'
+  namespace: '${NAMESPACE@microservice-config}'
+  labels:
+    moduleid: microservice-data
+    version: 1.70.0-master
+spec:
+  serviceName: '${SERVICE@microservice-data-config}'
+  selector:
+    matchLabels:
+      app: '${STATEFUL@microservice-data-config}'
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        moduleid: microservice-data
+        version: 1.70.0-master
+        app: '${STATEFUL@microservice-data-config}'
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        -
+          name: data
+          image: 'mongo:latest'
+          command:
+            - mongod
+            - '--bind_ip_all'
+          ports:
+            -
+              containerPort: '${INTERNAL_PORT@microservice-data-config}'
+          volumeMounts:
+            -
+              name: microservice-data-storage
+              mountPath: /data/db
+  volumeClaimTemplates:
+    -
+      metadata:
+        name: microservice-data-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: local-storage
+        resources:
+          requests:
+            storage: 1Gi

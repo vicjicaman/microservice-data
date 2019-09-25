@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: general-data-set
+  namespace: microservices-namespace
+  labels:
+    moduleid: microservice-data
+    version: 1.70.0-master
+spec:
+  serviceName: general-data-service
+  selector:
+    matchLabels:
+      app: general-data-set
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        moduleid: microservice-data
+        version: 1.70.0-master
+        app: general-data-set
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        -
+          name: data
+          image: 'mongo:latest'
+          command:
+            - mongod
+            - '--bind_ip_all'
+          ports:
+            -
+              containerPort: 27017
+          volumeMounts:
+            -
+              name: microservice-data-storage
+              mountPath: /data/db
+  volumeClaimTemplates:
+    -
+      metadata:
+        name: microservice-data-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: local-storage
+        resources:
+          requests:
+            storage: 1Gi
