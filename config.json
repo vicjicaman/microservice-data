@@ -6,7 +6,7 @@
     },
     "microservice-data-config": {
       "url": "github.com:vicjicaman/microservice-data-config.git",
-      "version": "1.70.2-blog-home-prod"
+      "version": "1.70.0-master"
     }
   }
 }
